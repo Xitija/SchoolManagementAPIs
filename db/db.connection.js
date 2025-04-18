@@ -1,12 +1,15 @@
-import mongoose, { model } from "mongoose";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+
+dotenv.config();
 
 const mongoURI = process.env.MONGODB_URI;
-
+if (!mongoURI) {
+  console.error("Mongo URI is not defined. Please check your environment variables.");
+}
 const initializeDatabase = async () => {
   try {
     const connection = await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       dbName: "SchoolManagement",
     });
     if (connection) {
