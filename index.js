@@ -16,6 +16,16 @@ app.use('/api-docs', swagger.swaggerUi.serve, swagger.swaggerUi.setup(swagger.sw
 
 initializeDatabase();
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Welcome message
+ *     description: Returns a welcome message for the School Management API
+ *     responses:
+ *       200:
+ *         description: Welcome message
+ */
 app.get("/", (req, res) => {
   res.send("School Management APIs!");
 });
