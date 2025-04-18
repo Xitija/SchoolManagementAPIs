@@ -2,6 +2,28 @@ import express from "express";
 const router = express.Router();
 import { Student } from "../models/student.model.js";
 
+/**
+ * @swagger
+ * /students/{id}:
+ *   get:
+ *     summary: Get a student by ID
+ *     tags:
+ *       - Students
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The student ID
+ *     responses:
+ *       200:
+ *         description: Student found
+ *       404:
+ *         description: Student not found
+ *       500:
+ *         description: Failed to fetch student
+ */
 router.get("/:id", async (req, res) => {
   try {
     const student = await Student.findById(req.params.id);
@@ -15,6 +37,19 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /students:
+ *   get:
+ *     summary: Get all students
+ *     tags:
+ *       - Students
+ *     responses:
+ *       200:
+ *         description: A list of students
+ *       500:
+ *         description: Internal server error
+ */
 router.get("/", async (req, res) => {
   try {
     const students = await Student.find();
@@ -24,6 +59,40 @@ router.get("/", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /students:
+ *   post:
+ *     summary: Create a new student
+ *     tags:
+ *       - Students
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               age:
+ *                 type: number
+ *               grade:
+ *                 type: string
+ *               gender:
+ *                 type: string
+ *               marks:
+ *                 type: number
+ *               attendance:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       201:
+ *         description: Student created successfully
+ *       500:
+ *         description: Internal server error
+ */
 router.post("/", async (req, res) => {
   const { name, age, grade, gender, marks, attendance } = req.body;
 
@@ -44,6 +113,35 @@ router.post("/", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /students/{id}:
+ *   put:
+ *     summary: Update a student by ID
+ *     tags:
+ *       - Students
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The student ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             additionalProperties: true
+ *     responses:
+ *       200:
+ *         description: Student updated successfully
+ *       404:
+ *         description: Student not found
+ *       500:
+ *         description: Server error
+ */
 router.put("/:id", async (req, res) => {
   const studentId = req.params.id;
   const updateStudentData = req.body;
@@ -74,6 +172,28 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /students/{id}:
+ *   delete:
+ *     summary: Delete a student by ID
+ *     tags:
+ *       - Students
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The student ID
+ *     responses:
+ *       200:
+ *         description: Student deleted successfully
+ *       404:
+ *         description: Student not found
+ *       500:
+ *         description: Internal server error
+ */
 router.delete("/:id", async (req, res) => {
   const studentId = req.params.id;
 
