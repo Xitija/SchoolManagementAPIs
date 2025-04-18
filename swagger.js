@@ -12,6 +12,11 @@ const swaggerOptions = {
     servers: [
       {
         url: "http://localhost:3000",
+        description: "Local server",
+      },
+      {
+        url: "https://schoolmanagementapis.onrender.com",
+        description: "Production server",
       },
     ],
   },
